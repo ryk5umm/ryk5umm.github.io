@@ -1,0 +1,253 @@
+library(tidyverse)
+library(rgdal)
+library(sf)
+library(tmap)
+library(rvest)
+
+# IMPORT natural earth data ####################################################
+# Province polygons
+# Data from: Admin 1 - State Provinces 
+# https://www.naturalearthdata.com/downloads/10m-cultural-vectors/
+states_provinces <- readOGR(dsn="D:/Data/States_Provinces", layer="ne_10m_admin_1_states_provinces")
+
+# Transform into sf object
+state_prov_sf <- st_as_sf(states_provinces)
+
+# FILTER for Argentina #########################################################
+arg <- state_prov_sf %>%
+  filter(geonunit == "Argentina")
+
+# Filter for provinces
+
+arg_b_a <- arg %>%
+  filter(name == "Buenos Aires")
+
+arg_s_c <- arg %>%
+  filter(name == "Santa Cruz")
+
+
+
+# IMPORT Argentina Departments shape file ######################################
+# Source: source: https://maps.princeton.edu/catalog/stanford-yb205cg6773
+
+arg_deps <- readOGR(dsn="D:/Blog/Argentina_Blog/Argentina_departments_shapefile", layer="yb205cg6773")
+
+# Transform into sf object
+arg_deps_sf <- st_as_sf(arg_deps)
+
+# Quick plot
+qtm(arg_deps_sf)
+
+# IMPORT Argentina Departments data table ######################################
+# Source: https://es.wikipedia.org/wiki/Anexo:Departamentos_y_partidos_de_Argentina_por_superficie_y_poblaci%C3%B3n_(2010)
+
+arg_wiki <- read_html("https://es.wikipedia.org/wiki/Anexo:Departamentos_y_partidos_de_Argentina_por_superficie_y_poblaci%C3%B3n_(2010)")
+
+arg_wiki_table <- arg_wiki %>%
+  html_table()
+
+arg_wiki_table <- arg_wiki_table[1]
+
+arg_wiki_table <- arg_wiki_table[[1]]
+
+names(arg_wiki_table) <- c('nat_area', 
+                           'nat_pop',
+                           'prov_area',
+                           'prov_pop',
+                           'department_party',
+                           'province',
+                           'headboard',
+                           'number_municipalities',
+                           'foundation',
+                           'area',
+                           'population')
+
+
+# remove top row
+arg_wiki_table <- arg_wiki_table[-1,]
+
+# and one more time...
+arg_wiki_table <- arg_wiki_table[-1,]
+
+# inspect
+
+view(arg_wiki_table)
+
+names(arg_wiki_table)
+
+arg_wiki_table$department_party
+
+# Use stringr to remove "Departamento " and "Partido de "
+
+    arg_wiki_table$department_party
+    
+    # ID matches with str_detect()
+    
+    str_detect(arg_wiki_table$department_party, "Departamento ")
+    
+    str_detect(arg_wiki_table$department_party, "Partido de ")
+    
+    # Remove matches with str_remove()
+    
+    arg_wiki_table$department_party <- str_remove(arg_wiki_table$department_party, "Departamento ")
+    
+    arg_wiki_table$department_party <- str_remove(arg_wiki_table$department_party, "Partido de ")
+
+    
+# Compare arg and arg_wiki_table ###############################################
+    
+arg_deps_sf$name_2 %in% arg_wiki_table$department_party
+
+    
+    
+# Join Departments data: arg and arg_wiki_table ################################
+    
+arg_deps_joined <- left_join(arg_deps_sf, arg_wiki_table, by = c(name_2 = 'department_party'))
+
+    arg_deps_joined$population    
+
+    str_detect(arg_deps_joined$population, " ", negate = F)
+    
+    str_replace(arg_deps_joined$population, " ", ",")
+        
+qtm(arg_deps_joined$population)
+
+    
+
+# CREATE Location Point Data ###################################################
+
+# start from st_point objects
+b_a <- st_point(c(-58.382762, -34.602840))
+el_calafate <- st_point(c(-72.27479987524464, -50.33824186648798))
+el_chalten <- st_point(c(-72.88545667955044, -49.331047896773875))
+
+# Create simple features column
+arg_locs_sfc <- st_sfc(b_a, el_calafate, el_chalten, crs = "EPSG:4326")
+
+# Create name data frame for attribute data
+arg_locs_df <- data.frame(name = c('Buenos Aires', 'El Calafate', 'El Chalten'))
+
+# Create sf object combining geometry and df attribute data
+arg_locs_sf <- st_sf(arg_locs_df, geometry = arg_locs_sfc)
+
+# Set tmaps to interactive
+tmap_mode("view")
+
+
+
+# PLOT Departments by population ###############################################
+
+
+tm_shape(arg_deps_joined) +
+  tm_fill('population', alpha = 1, palette = "viridis", legend.show=T) +
+  tm_borders() +
+  tm_shape(arg_locs_sf) + # Point locations
+  tm_dots(col = "black", scale=2) +
+  tm_text('name', size = 1.5, just = 'left') +
+  tm_basemap("Esri.NatGeoWorldMap", alpha = 0.8)
+
+
+
+
+arg_deps_joined[,'population']
+  
+
+df <- arg_deps_joined %>%
+  select(name_2, population)
+
+write_csv(df, 'D:/Blog/')
+
+
+
+# IMPORT province Wikipedia data ###############################################
+
+df <- read_csv("D:/Blog/Argentina_Blog/Argentina_Wikipedia - Argentina.csv")
+
+# correct arg names
+
+arg$name[1] <- 'Entre Ríos'
+arg$name[12] <- 'Neuquén'
+arg$name[14] <- 'Río Negro'
+arg$name[18] <- 'Buenos Aires City'
+arg$name[20] <- 'Tucumán'
+arg$name[24] <- 'Córdoba'
+
+# Use stringr to drop "province" from the names: df$'Province/District'
+
+str_sub(df$'Province/District'[2:24], -9, length(df$'Province/District')) <- ""
+str_sub(df$'Province/District'[23], -5, length(df$'Province/District')) <- ""
+str_sub(df$'Province/District'[22], -4, length(df$'Province/District')) <- ""
+
+#Join Wikipedia df and arg spatial data
+
+arg_df_join <- left_join(arg, df, by = c(name = 'Province/District'))
+
+
+# Inspect population vector
+
+pop <- arg_df_join$'Population (2022)[1]'
+
+class(pop)
+
+ggplot(arg_df_join, mapping = aes(x = 'Population (2022)[1]')) +
+  geom_histogram()
+
+ggplot(data = arg_df_join) +
+  geom_histogram(mapping = aes(x = 'Population (2022)[1]'), binwidth = 0.5)
+
+#Test plot with Wikipedia data
+
+#Fill province polygons by population
+tm_shape(arg_df_join) +
+  tm_fill('Population (2022)[1]', alpha = 0.3, legend.show=T) +
+  tm_borders() +
+#  tm_shape(arg_locs_sf) +
+#  tm_dots(col = "black", scale=2) +
+  tm_basemap("Stamen.Terrain")
+
+
+
+# Plot #########################################################################
+# TODO: Clean up popup #########################################################
+
+tm_shape(arg_df_join) +
+  tm_fill('Population (2022)[1]', alpha = 0.3, legend.show=T) +
+  tm_borders() +
+  tm_shape(arg_locs_sf) + # Point locations
+  tm_dots(col = "black", scale=2) +
+  tm_text('name', size = 1.5, just = 'left') +
+  tm_basemap("Esri.NatGeoWorldMap", alpha = 0.8) #+
+#  tm_shape(arg_b_a) + # Buenos Aires polygon
+#  tm_fill('black', alpha = 0.3) +
+#  tm_borders() +
+#  tm_shape(arg_s_c) + # Santa Cruz polygon
+#  tm_fill('black', alpha = 0.3) +
+#  tm_borders()
+
+
+
+# Plot tmap for Buenos Aires Provinces #########################################
+tm_shape(arg_b_a) +
+  tm_fill('#4758A8', alpha = 0.5, legend.show=F) +
+  tm_borders() +
+  tm_shape(arg_locs_sf) +
+  tm_dots(col = "black", scale=2) +
+  tm_text('name', size = 1.5, just = 'left') +
+  tm_basemap("Stamen.Terrain") +
+  tm_shape(arg) +
+  tm_fill('black', alpha = 0.3) +
+  tm_borders()
+
+
+
+# Plot tmap for Santa Cruz Province ############################################
+tm_shape(arg_s_c) +
+  tm_fill('#4758A8', alpha = 0.5, legend.show=F) +
+  tm_borders() +
+  tm_shape(arg_locs_sf) +
+  tm_dots(col = "black", scale=2) +
+  tm_text('name', size = 1.5, just = 'left') +
+  tm_basemap("Stamen.Terrain") +
+  tm_shape(arg) +
+  tm_fill('black', alpha = 0.3) +
+  tm_borders()
