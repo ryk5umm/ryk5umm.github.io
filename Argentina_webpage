@@ -1,0 +1,514 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" 
+    content="width=device-width, initial-scale=1">
+    
+    <meta name="generator" 
+    content="Hugo 0.108.0">
+    
+    <title>summerlin | media</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" 
+    rel="stylesheet" 
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" 
+    crossorigin="anonymous">
+
+<!--    <link href="https://summerlin.media/css/carousel.css" 
+    rel="stylesheet">-->
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      img {
+        max-width: 80%;
+      }
+
+      /* Container holding the image and the text */
+
+      .img-txt-container {
+        position: relative;
+        text-align: center;
+        color: white;
+      }
+
+      /* Bottom left text */
+      .bottom-left {
+        position: absolute;
+        bottom: 8px;
+        left: 16px;
+      }
+
+      /* Top left text */
+      .top-left {
+        position: absolute;
+        top: 8px;
+        left: 16px;
+      }
+
+      /* Top right text */
+      .top-right {
+        position: absolute;
+        top: 8px;
+        right: 16px;
+      }
+
+      /* Bottom right text */
+      .bottom-right {
+        position: absolute;
+        bottom: 8px;
+        right: 16px;
+      }
+
+      /* Centered text */
+      .centered {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+    </style>
+
+  </head>
+
+<body>
+    
+<!--NAVIGATION-->
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="https://summerlin.media">
+    <h1 class="display-6">
+    ryan summerlin | multimedia
+  </h1>
+  </a>
+  
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    
+  <span class="navbar-toggler-icon"></span>
+  
+  </button>
+
+
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" href="https://summerlin.media/action.html">action</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://summerlin.media/people.html">people</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://summerlin.media/wildlife.html">wildlife</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://summerlin.media/blog/bloglibrary.html">blog</a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link" href="https://summerlin.media/contact.html">contact</a>
+            </li>  
+        </ul>
+    
+      </div>
+    </div>
+</nav>
+<!--END NAVIGATION-->
+
+<!--MAIN WEBPAGE CONTENT-->
+
+<div class="container-fluid" style="margin-top: 100px;">
+
+<main>
+
+  <h1>Argentina: March 2023</h1>
+
+  <div class="container">
+
+    <div class="row featurette">
+      <div class="col-md-6">
+  
+        <img class="img-fluid rounded" src="https://summerlin.media/img/BuenosAires11.jpg" />
+
+        
+      </div>
+      <div class="col-md-6">
+        <img class="img-fluid rounded" src="https://summerlin.media/img/ElCheltan1.jpg" />
+  
+  
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- FEATURETTES -->
+
+<hr class="featurette-divider">
+
+<div class="container">
+
+    <div class="row featurette">
+      <div class="col-md-4">
+        <h1> Buenos Aires </h1>
+
+  <p>
+  
+    South America is largely unknown and unexplored in Midwestern education. Our popular conception of Latin America is so limited. We found Buenos Aires alive with people, with progressive culture and LGBT and trans pride around the city. So much of the youth culture reminds me of Athens or Seattle.
+
+    Argentina presents another story of completely divergent lives, living right next to one another.
+    
+    A big difference, or perhaps just my ignorance, but we see so many families, full family units of moms, dads and two or more kids. They’re sleeping all together on the filthy street, and it strikes me what an individual plight it has always seemed to me, to be homeless. But a whole family homeless together felt different indeed.
+    
+    Of course there are kids on the street back home too, but it seems like a life circumstance that we largely view as occurring to a person, an individual.    
+    
+  </p>
+
+      </div>
+      <div class="col-md-8">
+
+        
+        <div class="container">
+
+            <iframe src="https://summerlin.media/Argentina_2023.html" width="100%" height="575"></iframe>
+
+        </div>
+  
+
+
+      </div>
+    </div>
+
+
+        <!--DIPTYCH-->
+        <hr class="featurette-divider">
+
+        <div class="container">
+        
+        <div class="row featurette">
+    
+      <div class="col-md-6">
+        <img class="img-fluid rounded" src="https://summerlin.media/img/BuenosAires2.jpg" />
+      </div>
+    
+      <div class="col-md-6">
+        <img class="img-fluid rounded" src="https://summerlin.media/img/BuenosAires1.jpg" />
+    
+      </div>
+    
+    </div>
+    </div>
+    <!--END DIPTYCH-->
+
+      <!--TRIPTYCH-->
+      <hr class="featurette-divider">
+
+      <div class="container">
+      
+      <div class="row featurette">
+
+    <div class="col-md-4">
+      <img class="img-fluid rounded" src="https://summerlin.media/img/BuenosAires.jpg" />
+    </div>
+
+    <div class="col-md-4">
+      <img class="img-fluid rounded" src="https://summerlin.media/img/BuenosAires3.jpg" />
+
+    </div>
+
+    <div class="col-md-4">
+      <img class="img-fluid rounded" src="https://summerlin.media/img/BuenosAires7.jpg" />
+
+    </div>
+
+    </div>
+    </div>
+    <!--END TRIPTYCH-->
+    
+
+
+    <!--TRIPTYCH-->
+        <hr class="featurette-divider">
+
+        <div class="container">
+        
+        <div class="row featurette">
+
+      <div class="col-md-4">
+        <img class="img-fluid rounded" src="https://summerlin.media/img/BuenosAires9.jpg" />
+      </div>
+
+      <div class="col-md-4">
+        <img class="img-fluid rounded" src="https://summerlin.media/img/BuenosAires5.jpg" />
+
+      </div>
+
+      <div class="col-md-4">
+        <img class="img-fluid rounded" src="https://summerlin.media/img/BuenosAires4.jpg" />
+
+      </div>
+
+    </div>
+    </div>
+    <!--END TRIPTYCH-->
+
+   <hr class="featurette-divider">
+
+<div class="row">
+   <div class="col-md-12">
+    <img class="img-fluid rounded" src="https://summerlin.media/img/BuenosAires8.jpg" />
+
+  </div>
+</div>
+
+
+
+
+
+    <div class="row featurette">
+      <div class="col-md-4">
+        <h1> Memories of the Dirty War </h1>
+  <p>
+  
+    The best part of this experience was that we sort of just happened upon it. Sam vaguely recalled reading about a holiday on this weekend, but nothing specific. Then we found the downtown so packed with people that the driver couldn’t get closer than a 15-minute walk to our hotel. 
+    
+    “Impossible!” the driver cried, helpless to get us within about a half-dozen blocks from the hotel. But we reassured him we were okay to walk. No biggie, we can just hoof it, we decide.
+    
+    Make a mental note for future travel, when you wish for a hotel in the middle of everything, you can indeed get it. And it was pretty awesome.
+    
+    People were sharing some strong, emotional connections that day, and there was absolutely nowhere else we wanted to be, once we found it. When they unfurled a tapestry with the faces of the disappeared, the significance was like a blow to the chest, its deafening significance. Fascism is a word we use a lot in the U.S. media and in our conversations about the nation. But we don’t really know it. In the Buenos Aires streets that day, it felt impossible to know it like these people did, to understand the fear of fascism the way these people do.
+    
+    And it makes me very afraid.
+    
+    
+  
+  </p>
+
+      </div>
+      <div class="col-md-8">
+
+        
+        <div class="container">
+
+            <iframe src="https://summerlin.media/Argentina_2023_2.html" width="100%" height="575"></iframe>
+
+        </div>
+  
+
+
+      </div>
+    </div>
+
+  
+    <div class="row featurette">
+
+
+<p>
+  A festival of remembrance, of those who disappeared under the military dictatorship of Argentina in the 70s and 80s. A dark origin, but it has become a celebration of the people passed, and the people who remain. 30-some-thousand people disappeared from Argentina during this period. When we asked, the locals would tell us, too. They would make sure we know.
+    
+  It's ever so erie, to be in a nation with such a recent memory of fascist violence.
+  
+  To see this vibrant celbration, people packed in around the obelisk, it was a moving mixture of feelings, of joy and resolute passion. I heard a story about the Argentina military government dumping bodies at the base of the obelisk, an image of terror.
+  
+  The dancers unfurl a blue tapestry checkered with photos of the disappeared. This was their tribute, to ensure we do not forget the names and the faces.
+  
+  Racial hatred feels more understood, resource fighting feels more understood, Religious persecution feels like a known evil.
+  
+  But this fear of pure, authoritarian power seems perhaps darker still, and so unknown to us. And those who've seen it almost tell us with their stares, "It will happen to you, too."
+  
+  
+  
+  General festive chaos reigned across these many square blocks around the Obelisco.
+  
+  Among the densely packed crowds, the smell of street foods rise in smoke from vendors grills. The streets were scattered with debris. One narrow street corridor stank of piss, where men, and at least one woman we saw, were urinating in the small privacy offered by a dumpster. 
+  
+  What immediately comes to mind is a couple years before, in an Irish bar in Killarney, a group of Harley Davidson-clad Irishmen from Belfast, became incredibly solemn, singing Zombie by the Cranberries.
+  
+  The classic 90s grunge song about the times of the Troubles in Ireland, a time of violence and destruction between the Republic of Ireland and the British-controlled Northern Ireland. One of the men says they are from Belfast. “A proud Irishman,” he says.
+  
+  To meet people in such an intimate space inspires a deep sense of privilege.
+
+</p>
+
+    </div>
+
+    <!--TRIPTYCH-->
+    <hr class="featurette-divider">
+
+    <div class="container">
+    
+    <div class="row featurette">
+
+  <div class="col-md-4">
+    <img class="img-fluid rounded" src="https://summerlin.media/img/BuenosAires6.jpg" />
+  </div>
+
+  <div class="col-md-4">
+    <img class="img-fluid rounded" src="https://summerlin.media/img/BuenosAires13.jpg" />
+
+  </div>
+
+  <div class="col-md-4">
+    <img class="img-fluid rounded" src="https://summerlin.media/img/BuenosAires10.jpg" />
+
+  </div>
+
+</div>
+</div>
+<!--END TRIPTYCH-->
+
+  <hr class="featurette-divider">
+
+  <div class="container">
+  
+    <div class="row featurette">
+      <div class="col-md-4">
+        <h1> Mountain refuge </h1>
+  
+        <p>
+
+          The mountains were, of course, wide open spaces. Driving along, I would almost well up in tears in joy at the expanding space around me, and long deep breath of relief at not seeing another person around.
+          
+          Mountains of legendary name, Patagonia, Fitz Roy.
+          
+          And El Chaltan was, of course, a radically different environment from Buenos Aires. In the middle of nowhere, in a deep flat desert around Lago Argentina, the small mountain town at the base of Mt. Fitzroy. As we approached in the night, we saw not a single light on the landscape until we were within a couple miles of the town.
+           
+          There’s clearly plenty of money coming through this place. Comparison to Buenos Aires is just impossible.
+          
+          The restaurants are small. This is the homebase from one of the most icon trekking in the world. Patagonia.
+          
+          The tiny town has been in the Argentine news lately, as the home of the country’s vice president, Christina Fernandez Kirchner. Just a few months before she withstood an assassination attempt, and the Argentine news is filled with headlines of corruption investigations into her. Recently she’s vowed not to run for re-election in the upcoming national election.
+          
+          Of course, the allure of the mountains is intoxicating and reminded me a lot of earlier years in Colorado mountain towns.
+          
+          The modern tragedy of the two worlds living side by side, the two worlds of squalor and riches. The modern hope of communal joy growing from sheer darkness.
+          
+          After a couple days of hiking and climbing, our guide said that we had been very lucky with the calm weather. We didn’t know at first what he meant, but on the third day the wind did indeed kick up. I can’t imagine trying to hike or climb in that wind, with the intense projectile danger from hurtling sand. 
+          
+        </p>
+  
+  
+      </div>
+      <div class="col-md-8">
+        <img class="img-fluid rounded" src="https://summerlin.media/img/ElCheltan3.jpg" />
+        <div class="container">
+
+          <iframe src="https://summerlin.media/Argentina_2023_3.html" width="100%" height="575"></iframe>
+
+      </div>
+
+      </div>
+    </div>
+  </div>
+  <hr class="featurette-divider">
+
+
+
+    <div class="row featurette">
+
+
+
+      <div class="col-md-6">
+
+
+
+        <h1> Crested caracara</h1>
+
+  <p>
+  
+    Also, we found a Crested caracara sipping from Laguna Capri and edging around the proximity of beachgoers having lunch. This one was clearly habituated and didn’t seem to mind waltzing right up to me.
+
+    In El Calafate we got wine and dessert at a literary themed restaurant in somewhat of a treehouse architecture with big windows overlooking the main street from the second story. The wifi password was “Borges.”
+      
+    The cab driver asks, what kind of music do you like? Who's your favorite band?
+    
+    We' "Uh, Metallica," she says.
+    
+    He leans forward, gives a couple taps of his phone, and proclaims, "Okay...Master of Puppets, here we go!" And we jet off toward the airport. He tells us how passionate he is for the football player Messi. In fact, the whole country has looped replays of the World Cup, which they had just won, playing on every pub TV. He takes a call from a stern faced boss, and chuckles, “Uh-oh.”
+    
+    “There are troubles,” he says, seeming to let it all roll off his shoulders. And then he takes a call from a young woman. “My queen,” he says. 
+      
+  
+  </p>
+
+  <img class="img-fluid rounded" src="https://summerlin.media/img/Condor.jpg" />
+
+      </div>
+          
+      <div class="col-6">
+        <img class="img-fluid rounded" src="https://summerlin.media/img/Condor2.jpg" />
+      </div>
+
+    </div>
+  
+
+    <hr class="featurette-divider">
+
+  </div>
+    
+  <!-- /END THE FEATURETTES -->
+
+  <!-- FOOTER -->
+  <footer class="container">
+    <p class="float-end"><a href="#">Back to top</a></p>
+    <p><a href="summerlin.media">ryan summerlin | multimedia</a></p>
+    <p><a href="https://summerlin.media/ContactSummerlinMedia.html">contact</a></p>
+
+  </footer>
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" 
+integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" 
+crossorigin="anonymous"></script>
+
+</body>
+</html>
