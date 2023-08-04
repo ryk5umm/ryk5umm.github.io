@@ -1,0 +1,537 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(rgdal)
+library(sf)
+library(tmap)
+library(tmaptools)
+library(rvest)
+library(readxl)
+library(units)
+
+# IMPORT Argentina Provinces shapefile #########################################
+# Province polygons
+# Data from: Admin 1 - State Provinces 
+# https://www.naturalearthdata.com/downloads/10m-cultural-vectors/
+states_provinces <- readOGR(dsn="D:/Data/States_Provinces", layer="ne_10m_admin_1_states_provinces")
+
+# Transform into sf object
+state_prov_sf <- st_as_sf(states_provinces)
+
+# FILTER province SF for Argentina #############################################
+arg <- state_prov_sf %>%
+  filter(geonunit == "Argentina")
+
+# FILTER province SF for Provinces #############################################
+
+arg_b_a <- arg %>%
+  filter(name == "Buenos Aires")
+
+arg_s_c <- arg %>%
+  filter(name == "Santa Cruz")
+
+# IMPORT Argentina Departments shape file ######################################
+# Source: source: https://maps.princeton.edu/catalog/stanford-yb205cg6773
+
+arg_deps <- readOGR(dsn="D:/Blog/Argentina_Blog/Argentina_departments_shapefile", layer="yb205cg6773")
+
+# Transform into sf object
+arg_deps_sf <- st_as_sf(arg_deps)
+
+
+# RENAME departments SF 'name_2' and 'name_1 ###################################
+
+arg_deps_sf <- arg_deps_sf %>%
+  rename(department = "name_2")
+
+arg_deps_sf <- arg_deps_sf %>%
+  rename(province = "name_1")
+
+# CREATE Location Point Data ###################################################
+
+# start from st_point objects
+b_a <- st_point(c(-58.382762, -34.602840))
+el_calafate <- st_point(c(-72.27479987524464, -50.33824186648798))
+el_chalten <- st_point(c(-72.88545667955044, -49.331047896773875))
+
+# Create simple features column
+arg_locs_sfc <- st_sfc(b_a, el_calafate, el_chalten, crs = "EPSG:4326")
+
+# Create name data frame for attribute data
+arg_locs_df <- data.frame(name = c('Buenos Aires', 'El Calafate', 'El Chalten'))
+
+# Create sf object combining geometry and df attribute data
+arg_locs_sf <- st_sf(arg_locs_df, geometry = arg_locs_sfc)
+
+# Set tmaps to interactive
+tmap_mode("view")
+
+
+
+
+
+# IMPORT pop df ################################################################
+
+# IMPORT Buenos_aires census data
+
+buenos_aires <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Buenos_Aires.xls")
+buenos_aires <- buenos_aires[c(-1:-7),]
+buenos_aires <- buenos_aires[ ,c(-4:-5)]
+names(buenos_aires) <- c('department', '2001', '2010')
+# Save matrix length as variable
+buenos_aires.len <- length(buenos_aires$department)
+# Use subsetting to remove last four rows
+buenos_aires <- (buenos_aires[c(-(buenos_aires.len-3):-buenos_aires.len), ])
+# Add province variable
+buenos_aires <- buenos_aires %>%
+  mutate(province = "Buenos Aires")
+
+
+
+# IMPORT Catamarca census data
+
+catamarca <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Catamarca.xls")
+catamarca <- catamarca[c(-1:-7),]
+catamarca <- catamarca[ ,c(-4:-length(catamarca))]
+names(catamarca) <- c('department', '2001', '2010')
+catamarca.len <- length(catamarca$department)
+# Use subsetting to remove last four rows
+catamarca <- (catamarca[c(-(catamarca.len-3):-catamarca.len), ])
+# Add province variable
+catamarca <- catamarca %>%
+  mutate(province = "Catamarca")
+
+
+# IMPORT Chaco census data
+
+chaco <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Chaco.xls")
+chaco <- chaco[c(-1:-7),]
+chaco <- chaco[ ,c(-4:-length(chaco))]
+names(chaco) <- c('department', '2001', '2010')
+# Save matrix length as variable
+chaco.len <- length(chaco$department)
+# Use subsetting to remove last four rows
+chaco <- (chaco[c(-(chaco.len-3):-chaco.len), ])
+# Add province variable
+chaco <- chaco %>%
+  mutate(province = "Chaco")
+
+
+
+
+# IMPORT Chubut census data
+
+chubut <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Chubut.xls")
+chubut <- chubut[c(-1:-7),]
+chubut <- chubut[ ,c(-4:-length(chubut))]
+names(chubut) <- c('department', '2001', '2010')
+# Save matrix length as variable
+chubut.len <- length(chubut$department)
+# Use subsetting to remove last four rows
+chubut <- (chubut[c(-(chubut.len-3):-chubut.len), ])
+# Add province variable
+chubut <- chubut %>%
+  mutate(province = "Chubut")
+
+# IMPORT Cordoba census data
+
+cordoba <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Cordoba.xls")
+cordoba <- cordoba[c(-1:-7),]
+cordoba <- cordoba[ ,c(-4:-length(cordoba))]
+names(cordoba) <- c('department', '2001', '2010')
+# Save matrix length as variable
+cordoba.len <- length(cordoba$department)
+# Use subsetting to remove last four rows
+cordoba <- (cordoba[c(-(cordoba.len-3):-cordoba.len), ])
+# Add province variable
+cordoba <- cordoba %>%
+  mutate(province = "Córdoba")
+
+# IMPORT Corrientes census data
+
+corrientes <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Corrientes.xls")
+corrientes <- corrientes[c(-1:-7),]
+corrientes <- corrientes[ ,c(-4:-length(corrientes))]
+names(corrientes) <- c('department', '2001', '2010')
+# Save matrix length as variable
+corrientes.len <- length(corrientes$department)
+# Use subsetting to remove last four rows
+corrientes <- (corrientes[c(-(corrientes.len-3):-corrientes.len), ])
+# Add province variable
+corrientes <- corrientes %>%
+  mutate(province = "Corrientes")
+
+# IMPORT Entre_rios census data
+
+entre_rios <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Entre_rios.xls")
+entre_rios <- entre_rios[c(-1:-7),]
+entre_rios <- entre_rios[ ,c(-4:-length(entre_rios))]
+names(entre_rios) <- c('department', '2001', '2010')
+# Save matrix length as variable
+entre_rios.len <- length(entre_rios$department)
+# Use subsetting to remove last four rows
+entre_rios <- (entre_rios[c(-(entre_rios.len-3):-entre_rios.len), ])
+# Add province variable
+entre_rios <- entre_rios %>%
+  mutate(province = "Entre Ríos")
+
+# IMPORT Formosa census data
+
+formosa <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Formosa.xls")
+formosa <- formosa[c(-1:-7),]
+formosa <- formosa[ ,c(-4:-length(formosa))]
+names(formosa) <- c('department', '2001', '2010')
+# Save matrix length as variable
+formosa.len <- length(formosa$department)
+# Use subsetting to remove last four rows
+formosa <- (formosa[c(-(formosa.len-3):-formosa.len), ])
+# Add province variable
+formosa <- formosa %>%
+  mutate(province = "Formosa")
+
+# IMPORT Jujuy census data
+
+jujuy <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Jujuy.xls")
+jujuy <- jujuy[c(-1:-7),]
+jujuy <- jujuy[ ,c(-4:-length(jujuy))]
+names(jujuy) <- c('department', '2001', '2010')
+# Save matrix length as variable
+jujuy.len <- length(jujuy$department)
+# Use subsetting to remove last four rows
+jujuy <- (jujuy[c(-(jujuy.len-3):-jujuy.len), ])
+# Add province variable
+jujuy <- jujuy %>%
+  mutate(province = "Jujuy")
+
+
+# IMPORT La_pampa census data
+
+la_pampa <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_La_pampa.xls")
+la_pampa <- la_pampa[c(-1:-7),]
+la_pampa <- la_pampa[ ,c(-4:-length(la_pampa))]
+names(la_pampa) <- c('department', '2001', '2010')
+# Save matrix length as variable
+la_pampa.len <- length(la_pampa$department)
+# Use subsetting to remove last four rows
+la_pampa <- (la_pampa[c(-(la_pampa.len-3):-la_pampa.len), ])
+# Add province variable
+la_pampa <- la_pampa %>%
+  mutate(province = "La Pampa")
+
+# IMPORT La_rioja census data
+
+la_rioja <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_La_rioja.xls")
+la_rioja <- la_rioja[c(-1:-7),]
+la_rioja <- la_rioja[ ,c(-4:-length(la_rioja))]
+names(la_rioja) <- c('department', '2001', '2010')
+# Save matrix length as variable
+la_rioja.len <- length(la_rioja$department)
+# Use subsetting to remove last four rows
+la_rioja <- (la_rioja[c(-(la_rioja.len-3):-la_rioja.len), ])
+# Add province variable
+la_rioja <- la_rioja %>%
+  mutate(province = "La Rioja")
+
+
+# IMPORT Mendoza census data
+
+mendoza <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Mendoza.xls")
+mendoza <- mendoza[c(-1:-7),]
+mendoza <- mendoza[ ,c(-4:-length(mendoza))]
+names(mendoza) <- c('department', '2001', '2010')
+# Save matrix length as variable
+mendoza.len <- length(mendoza$department)
+# Use subsetting to remove last four rows
+mendoza <- (mendoza[c(-(mendoza.len-3):-mendoza.len), ])
+# Add province variable
+mendoza <- mendoza %>%
+  mutate(province = "Mendoza")
+
+# IMPORT Misiones census data
+
+misiones <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Misiones.xls")
+misiones <- misiones[c(-1:-7),]
+misiones <- misiones[ ,c(-4:-length(misiones))]
+names(misiones) <- c('department', '2001', '2010')
+# Save matrix length as variable
+misiones.len <- length(misiones$department)
+# Use subsetting to remove last four rows
+misiones <- (misiones[c(-(misiones.len-3):-misiones.len), ])
+# Add province variable
+misiones <- misiones %>%
+  mutate(province = "Misiones")
+
+# IMPORT Neuquen census data
+
+neuquen <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Neuquen.xls")
+neuquen <- neuquen[c(-1:-7),]
+neuquen <- neuquen[ ,c(-4:-length(neuquen))]
+names(neuquen) <- c('department', '2001', '2010')
+# Save matrix length as variable
+neuquen.len <- length(neuquen$department)
+# Use subsetting to remove last four rows
+neuquen <- (neuquen[c(-(neuquen.len-3):-neuquen.len), ])
+# Add province variable
+neuquen <- neuquen %>%
+  mutate(province = "Neuquén")
+
+# IMPORT Rio_negro census data
+
+rio_negro <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Rio_negro.xls")
+rio_negro <- rio_negro[c(-1:-7),]
+rio_negro <- rio_negro[ ,c(-4:-length(rio_negro))]
+names(rio_negro) <- c('department', '2001', '2010')
+# Save matrix length as variable
+rio_negro.len <- length(rio_negro$department)
+# Use subsetting to remove last four rows
+rio_negro <- (rio_negro[c(-(rio_negro.len-3):-rio_negro.len), ])
+# Add province variable
+rio_negro <- rio_negro %>%
+  mutate(province = "Río Negro")
+
+# IMPORT Salta census data
+
+salta <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Salta.xls")
+salta <- salta[c(-1:-7),]
+salta <- salta[ ,c(-4:-length(salta))]
+names(salta) <- c('department', '2001', '2010')
+# Save matrix length as variable
+salta.len <- length(salta$department)
+# Use subsetting to remove last four rows
+salta <- (salta[c(-(salta.len-3):-salta.len), ])
+# Add province variable
+salta <- salta %>%
+  mutate(province = "Salta")
+
+# IMPORT San_juan census data 
+
+san_juan <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_San_juan.xls")
+san_juan <- san_juan[c(-1:-7),]
+san_juan <- san_juan[ ,c(-4:-length(san_juan))]
+names(san_juan) <- c('department', '2001', '2010')
+# Save matrix length as variable
+san_juan.len <- length(san_juan$department)
+# Use subsetting to remove last four rows
+san_juan <- (san_juan[c(-(san_juan.len-3):-san_juan.len), ])
+# Add province variable
+san_juan <- san_juan %>%
+  mutate(province = "San Juan")
+
+# IMPORT San_luis census data
+
+san_luis <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_San_luis.xls")
+san_luis <- san_luis[c(-1:-7),]
+san_luis <- san_luis[ ,c(-4:-length(san_luis))]
+names(san_luis) <- c('department', '2001', '2010')
+# Save matrix length as variable
+san_luis.len <- length(san_luis$department)
+# Use subsetting to remove last four rows
+san_luis <- (san_luis[c(-(san_luis.len-7):-san_luis.len), ])
+# Add province variable
+san_luis <- san_luis %>%
+  mutate(province = "San Luis")
+
+# IMPORT Santa_cruz census data
+
+santa_cruz <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Santa_cruz.xls")
+santa_cruz <- santa_cruz[c(-1:-7),]
+santa_cruz <- santa_cruz[ ,c(-4:-length(santa_cruz))]
+names(santa_cruz) <- c('department', '2001', '2010')
+# Save matrix length as variable
+santa_cruz.len <- length(santa_cruz$department)
+# Use subsetting to remove last four rows
+santa_cruz <- (santa_cruz[c(-(santa_cruz.len-3):-santa_cruz.len), ])
+# Add province variable
+santa_cruz <- santa_cruz %>%
+  mutate(province = "Santa Cruz")
+
+# IMPORT Santa_fe census data
+
+santa_fe <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Santa_fe.xls")
+santa_fe <- santa_fe[c(-1:-7),]
+santa_fe <- santa_fe[ ,c(-4:-length(santa_fe))]
+names(santa_fe) <- c('department', '2001', '2010')
+# Save matrix length as variable
+santa_fe.len <- length(santa_fe$department)
+# Use subsetting to remove last four rows
+santa_fe <- (santa_fe[c(-(santa_fe.len-3):-santa_fe.len), ])
+# Add province variable
+santa_fe <- santa_fe %>%
+  mutate(province = "Santa Fe")
+
+# IMPORT Santiago_del_estero census data
+
+santiago_del_estero <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Santiago_del_estero.xls")
+santiago_del_estero <- santiago_del_estero[c(-1:-7),]
+santiago_del_estero <- santiago_del_estero[ ,c(-4:-length(santiago_del_estero))]
+names(santiago_del_estero) <- c('department', '2001', '2010')
+# Save matrix length as variable
+santiago_del_estero.len <- length(santiago_del_estero$department)
+# Use subsetting to remove last four rows
+santiago_del_estero <- (santiago_del_estero[c(-(santiago_del_estero.len-3):-santiago_del_estero.len), ])
+# Add province variable
+santiago_del_estero <- santiago_del_estero %>%
+  mutate(province = "Santiago del Estero")
+
+
+# IMPORT Tucuman census data
+
+tucuman <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Tucuman.xls")
+tucuman <- tucuman[c(-1:-7),]
+tucuman <- tucuman[ ,c(-4:-length(tucuman))]
+names(tucuman) <- c('department', '2001', '2010')
+# Save matrix length as variable
+tucuman.len <- length(tucuman$department)
+# Use subsetting to remove last four rows
+tucuman <- (tucuman[c(-(tucuman.len-3):-tucuman.len), ])
+# Add province variable
+tucuman <- tucuman %>%
+  mutate(province = "Tucumán")
+
+# IMPORT Tierra_del_fuego census data 
+
+tierra_del_fuego <- read_excel("D:/Blog/Argentina_Blog/Argentina_PopulaitonbyProvince/P1-P_Tierra_del_fuego.xls")
+tierra_del_fuego <- tierra_del_fuego[c(-1:-7),]
+tierra_del_fuego <- tierra_del_fuego[ ,c(-4:-length(tierra_del_fuego))]
+names(tierra_del_fuego) <- c('department', '2001', '2010')
+# Save matrix length as variable
+tierra_del_fuego.len <- length(tierra_del_fuego$department)
+# Use subsetting to remove last four rows
+tierra_del_fuego <- (tierra_del_fuego[c(-(tierra_del_fuego.len-14):-tierra_del_fuego.len), ])
+# Add province variable
+tierra_del_fuego <- tierra_del_fuego %>%
+  mutate(province = "Tierra del Fuego")
+
+
+
+
+
+# BIND ROWS of df variables ####################################################
+
+arg_pop_df <- bind_rows(buenos_aires,
+          catamarca,
+          chaco,
+          chubut,
+          cordoba,
+          corrientes,
+          entre_rios,
+          formosa,
+          jujuy,
+          la_pampa,
+          la_rioja,
+          mendoza,
+          misiones,
+          neuquen,
+          rio_negro,
+          salta,
+          san_juan,
+          san_luis,
+          santa_cruz,
+          santa_fe,
+          santiago_del_estero,
+          tucuman,
+          tierra_del_fuego
+)
+
+# CREATE new variable "dep_prov" in arg_pop_df ###############################
+
+arg_pop_df <- arg_pop_df %>%
+  mutate(dep_prov = str_c(department, province, sep = ", "))
+
+# CREATE new variable "dep_prov" in arg_deps_sf ###############################
+
+arg_deps_sf <- arg_deps_sf %>%
+  mutate(dep_prov = str_c(department, province, sep = ", "))
+
+# SELECT only necessary variables in df and sf: 2010, dep_prov, and geometry
+
+arg_pop_df_1 <- arg_pop_df %>%
+  select('2010', 'dep_prov')
+
+arg_deps_sf_1 <- arg_deps_sf %>%
+  select('dep_prov', 'geometry')
+
+
+# RESOLVE CONFLICTING Key Varialbes ############################################
+
+# [x] First Phase: update Spanish characters in province names assigned to pop df
+
+# [x] Second Phase: update pop df with new dep_prov names
+# Use subsetting to rename records
+
+arg_pop_df_1$dep_prov[5] <- "Veinticinco de Mayo, Chaco"
+arg_pop_df_1$dep_prov[41] <- "Ameghino, Buenos Aires"
+arg_pop_df_1$dep_prov[89] <- "Nueve de Julio, Buenos Aires"
+arg_pop_df_1$dep_prov[155] <- "Doce de Octubre, Chaco"
+arg_pop_df_1$dep_prov[166] <- "Nueve de Julio, Chaco"
+arg_pop_df_1$dep_prov[169] <- "Primero de Mayo, Chaco"
+arg_pop_df_1$dep_prov[175] <- "Veinticinco de Mayo, Buenos Aires"
+arg_pop_df_1$dep_prov[187] <- "Río Senguer, Chubut"
+arg_pop_df_1$dep_prov[242] <- "Colón, Entre Ríos"
+arg_pop_df_1$dep_prov[290] <- "Chical Có, La Pampa"
+arg_pop_df_1$dep_prov[313] <- "General Angel Vicente Peñaloza, La Rioja"
+arg_pop_df_1$dep_prov[315] <- "General Juan Facundo Quiroga, La Rioja"
+arg_pop_df_1$dep_prov[358] <- "Veinticinco de Mayo, Misiones"
+arg_pop_df_1$dep_prov[366] <- "Lacar, Neuquén"
+arg_pop_df_1$dep_prov[382] <- "Nueve de Julio, Río Negro"
+arg_pop_df_1$dep_prov[387] <- "Veinticinco de Mayo, Río Negro"
+arg_pop_df_1$dep_prov[428] <- "Veinticinco de Mayo, San Juan"
+arg_pop_df_1$dep_prov[437] <- "La Capital, San Luis"
+arg_pop_df_1$dep_prov[445] <- "Río Chico, Santa Cruz"
+arg_pop_df_1$dep_prov[456] <- "Nueve de Julio, Santa Fe"
+arg_pop_df_1$dep_prov[478] <- "Juan Felipe Ibarra, Santiago del Estero"
+arg_pop_df_1$dep_prov[485] <- "Río Hondo, Santiago del Estero"
+arg_pop_df_1$dep_prov[510] <- "Río Grande, Tierra del Fuego"
+
+# RENAME "Rio" in pre-join sf, to correct for misjoins
+arg_deps_sf_1$dep_prov <- str_replace(arg_deps_sf_1$dep_prov, "Rió", "Río")
+
+
+# JOIN df of departments with departments sf #########################
+
+arg_dep_pop_sf <- left_join(arg_deps_sf_1, arg_pop_df_1, by = 'dep_prov')
+
+# DIVIDE Population by AREA ####################################################
+
+# pop_by_area <- set_units(st_area(arg_dep_pop_sf$geometry[2]), km^2)
+
+arg_dep_pop_sf$`2010`[1] / set_units(st_area(arg_dep_pop_sf$geometry[1]), km^2)
+
+arg_dep_pop_sf$pop_by_area <- arg_dep_pop_sf$`2010`[1:503] / set_units(st_area(arg_dep_pop_sf$geometry[1:503]), km^2)
+
+
+```
+
+# Argentina's population is generally concentrated in the northern and eastern regions
+
+```{r cars, echo=F, out.width="100%"}
+
+# PLOT arg_dep_pop_sf ##########################################################
+
+tm_shape(arg_dep_pop_sf, 
+         bbox = st_bbox(c(ymin = -50.6, 
+                          ymax = -21.6, 
+                          xmin = -65.0, 
+                          xmax = -50.0), crs = st_crs(4326))) +
+  tm_fill('pop_by_area', 
+          alpha = 0.8, 
+          palette = "plasma", 
+          legend.show= T, 
+          style = 'quantile',
+          n = 10,
+          popup.vars= c('2010', 'pop_by_area')) +
+  tm_borders() +
+  tm_shape(arg_locs_sf) + # Point locations
+  tm_dots(col = "black", 
+          scale=2) +
+  tm_text('name', 
+          size = 1.5, 
+          just = 'left') +
+  tm_shape(arg) +
+  tm_borders(col = "black", lwd = 2) +
+  tm_basemap(c(StreetMap = "OpenStreetMap",
+               TopoMap = "OpenTopoMap"))
+
+```
+Data source: [Argentina Census 2010](https://www.indec.gob.ar/indec/web/Nivel4-Tema-2-41-135)
